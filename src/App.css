@@ -1,0 +1,27 @@
+.btn-primary {
+  background-color: var(--pastel-blue) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #333 !important;
+  font-weight: bold;
+}
+
+.btn-pink {
+  background-color: #ff85a2 !important;
+  color: white !important;
+  border-radius: 50px !important;
+  border: none;
+}
+
+.text-pink {
+  color: #ff85a2 !important;
+}
+
+.border-pink {
+  border-color: #ff85a2 !important;
+}
+
+.hover-card:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s ease;
+}
