@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   // Formik for "Add Event" 
   const formik = useFormik({
-    initialValues: { name: "", date: "", description: "", location: "" },
+    initialValues: { name: "", date: "", time: "", description: "", location: "" },
     onSubmit: (values, { resetForm }) => {
       addEvent(values);
       resetForm();
@@ -20,8 +20,8 @@ const Dashboard = () => {
 
   // Formik for "Update Event" 
   const editFormik = useFormik({
-    enableReinitialize: true, 
-    initialValues: currentEvent || { name: "", date: "", description: "", location: "" },
+    enableReinitialize: true,
+    initialValues: currentEvent || { name: "", date: "", time: "", description: "", location: "" },
     onSubmit: (values) => {
       updateEvent(values);
       setShowEdit(false);
@@ -43,25 +43,35 @@ const Dashboard = () => {
           <Card className="p-4 border-0 shadow-sm sticky-top" style={{ top: "100px", borderRadius: "20px" }}>
             <h4 style={{ color: "#ff85a2" }}>Add New Event</h4>
             <Form onSubmit={formik.handleSubmit}>
-                <Form.Group className="mb-2">
-                    <Form.Label className="small">Event Name</Form.Label>
-                    <Form.Control size="sm" name="name" onChange={formik.handleChange} value={formik.values.name} required />
-                </Form.Group>
-                
-                <Form.Group className="mb-2">
+              <Form.Group className="mb-2">
+                <Form.Label className="small">Event Name</Form.Label>
+                <Form.Control size="sm" name="name" onChange={formik.handleChange} value={formik.values.name} required />
+              </Form.Group>
+
+              <Row>
+                <Col md={7}>
+                  <Form.Group className="mb-2">
                     <Form.Label className="small">Date</Form.Label>
                     <Form.Control size="sm" type="date" name="date" onChange={formik.handleChange} value={formik.values.date} required />
-                </Form.Group>
+                  </Form.Group>
+                </Col>
+                <Col md={5}>
+                  <Form.Group className="mb-2">
+                    <Form.Label className="small">Time</Form.Label>
+                    <Form.Control size="sm" type="time" name="time" onChange={formik.handleChange} value={formik.values.time} required />
+                  </Form.Group>
+                </Col>
+              </Row>
 
-                <Form.Group className="mb-2">
-                    <Form.Label className="small">Location</Form.Label>
-                    <Form.Control size="sm" name="location" onChange={formik.handleChange} value={formik.values.location} />
-                </Form.Group>
-                
-                <Form.Group className="mb-3">
-                    <Form.Label className="small">Description</Form.Label>
-                    <Form.Control size="sm" as="textarea" rows={2} name="description" onChange={formik.handleChange} value={formik.values.description} />
-                </Form.Group>
+              <Form.Group className="mb-2">
+                <Form.Label className="small">Location</Form.Label>
+                <Form.Control size="sm" name="location" onChange={formik.handleChange} value={formik.values.location} />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label className="small">Description</Form.Label>
+                <Form.Control size="sm" as="textarea" rows={2} name="description" onChange={formik.handleChange} value={formik.values.description} />
+              </Form.Group>
               <Button type="submit" className="w-100 btn-pink">Add Event 🌸</Button>
             </Form>
           </Card>
@@ -77,7 +87,10 @@ const Dashboard = () => {
                   <Card.Body className="d-flex flex-column">
                     <div className="d-flex justify-content-between">
                       <h6 style={{ color: "#ff85a2" }}>{event.name}</h6>
-                      <span className="badge bg-light text-dark small">{event.date}</span>
+                      <div className="text-end">
+                        <span className="badge bg-light text-dark small d-block mb-1">{event.date}</span>
+                        <span className="badge bg-soft-pink text-muted small">{event.time}</span>
+                      </div>
                     </div>
                     <p className="small text-muted mb-2">{event.description}</p>
                     <div className="d-flex justify-content-between align-items-center mt-auto">
@@ -110,10 +123,25 @@ const Dashboard = () => {
               <Form.Label>Event Name</Form.Label>
               <Form.Control name="name" onChange={editFormik.handleChange} value={editFormik.values.name} required />
             </Form.Group>
-            
+
+            <Row>
+              <Col>
+                <Form.Group className="mb-2">
+                  <Form.Label>Date</Form.Label>
+                  <Form.Control type="date" name="date" onChange={editFormik.handleChange} value={editFormik.values.date} required />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-2">
+                  <Form.Label>Time</Form.Label>
+                  <Form.Control type="time" name="time" onChange={editFormik.handleChange} value={editFormik.values.time} required />
+                </Form.Group>
+              </Col>
+            </Row>
+
             <Form.Group className="mb-2">
-              <Form.Label>Date</Form.Label>
-              <Form.Control type="date" name="date" onChange={editFormik.handleChange} value={editFormik.values.date} required />
+              <Form.Label>Location</Form.Label>
+              <Form.Control name="location" onChange={editFormik.handleChange} value={editFormik.values.location} />
             </Form.Group>
 
             <Form.Group className="mb-3">
